@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -32,7 +33,8 @@ fun SplashScreen(onDone: () -> Unit) {
     val letters = remember { Animatable(0f) }
     val bar = remember { Animatable(0f) }
 
-    val glow by rememberInfiniteTransition(label = "glow").animateFloat(
+    val glowTransition = rememberInfiniteTransition(label = "glow")
+    val glow: Float by glowTransition.animateFloat(
         initialValue = 0.35f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
@@ -123,7 +125,7 @@ fun SplashScreen(onDone: () -> Unit) {
 private fun Wordmark(progress: Float) {
     val word = "TAHALABS"
     Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-        word.forEachIndexed { i, ch ->
+        word.forEachIndexed { i: Int, ch: Char ->
             val p = ((progress * (word.length + 4) - i) / 4f).coerceIn(0f, 1f)
             val first = i < 4
             Text(

@@ -3,6 +3,7 @@ package com.tahalabs.gamelauncherpro.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -171,13 +172,13 @@ fun BoostSessionScreen(
         Spacer(Modifier.height(28.dp))
 
         val pulse = rememberInfiniteTransition(label = "pulse")
-        val scale by pulse.animateFloat(
+        val scale: Float by pulse.animateFloat(
             initialValue = 1f,
             targetValue = 1.4f,
             animationSpec = infiniteRepeatable(tween(1500, easing = FastOutSlowInEasing), RepeatMode.Restart),
             label = "pulseScale"
         )
-        val ringAlpha by pulse.animateFloat(
+        val ringAlpha: Float by pulse.animateFloat(
             initialValue = 0.55f,
             targetValue = 0f,
             animationSpec = infiniteRepeatable(tween(1500, easing = FastOutSlowInEasing), RepeatMode.Restart),
@@ -266,7 +267,8 @@ private fun StepDot(state: StepState) {
                     .border(1.5.dp, Pal.Line, CircleShape)
             )
             StepState.Running -> {
-                val a by rememberInfiniteTransition(label = "dot").animateFloat(
+                val dotTransition = rememberInfiniteTransition(label = "dot")
+                val a: Float by dotTransition.animateFloat(
                     initialValue = 0.25f,
                     targetValue = 1f,
                     animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
