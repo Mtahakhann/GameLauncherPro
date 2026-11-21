@@ -18,7 +18,7 @@ import com.tahalabs.gamelauncherpro.ui.LauncherTheme
 class MainActivity : ComponentActivity() {
 
     private var resumeTick by mutableIntStateOf(0)
-    private var visible by mutableStateOf(false)
+    private var isScreenVisible by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +31,19 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LauncherTheme {
-                AppRoot(resumeTick = resumeTick, visible = visible)
+                AppRoot(resumeTick = resumeTick, visible = isScreenVisible)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        visible = true
+        isScreenVisible = true
         resumeTick++
     }
 
     override fun onPause() {
         super.onPause()
-        visible = false
+        isScreenVisible = false
     }
 }
